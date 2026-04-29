@@ -4,6 +4,7 @@ import {createPost} from "../services/posts";
 export default function PostForm(){
 
    const[form,setForm] = useState({
+    category:"",
     title: "",
     content: ""
    });
@@ -20,11 +21,19 @@ export default function PostForm(){
 
     e.preventDefault();
 
+    console.log("FORM DATA SENT:", form);
+
+    if (!form.category) {
+    alert("Please select a category");
+    return;
+    }
+
     await createPost(form);
 
     alert("Post Created");
 
     setForm({
+      category:"",
       title:"",
       content:""
     });
@@ -53,12 +62,13 @@ export default function PostForm(){
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <label for="category" className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-2">Category</label>
-        <select id="category" name="category" 
+        <select id="category" name="category" value={form.category} onChange={handleChange} 
           className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black focus:border-black outline-none appearance-none transition-all text-gray-700">
-          <option>Politics</option>
-          <option>Technology</option>
-          <option>Logistics</option>
-          <option>Environment</option>
+          <option value="">Select</option>
+          <option value="Politics">Politics</option>
+          <option value="Technology">Technology</option>
+          <option value="Logistics">Logistics</option>
+          <option value="Environment">Environment</option>
         </select>
       </div>
 
