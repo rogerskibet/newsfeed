@@ -6,7 +6,7 @@ import { usePosts } from "../hooks/usePosts";
 export default function Admin(){
 
    const {posts}= usePosts()
-   
+    
 
  
   

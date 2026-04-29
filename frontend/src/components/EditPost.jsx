@@ -1,11 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../hooks/usePosts";
-import { deletePost } from "../services/posts";
+import { deletePost, updatePost } from "../services/posts";
+import { useState } from "react";
 
 export default function EditPost() {
 
     // 1. Destructure setPosts so you can use it in handleDelete
   const { posts, loading, error, setPosts } = usePosts(); 
+  const [updating, setUpdating] = useState(false);
+  const [success, setSuccess] = useState(false);
+  
   const { id } = useParams();
 
   const post = posts.find((p) => p._id === id);
@@ -15,8 +19,39 @@ export default function EditPost() {
 
 async function handleUpdate(e) {
   e.preventDefault();
-  
-}
+  setUpdating(true);
+
+  // Extracting Data from form fields
+  const formData = new FormData(e.target);
+  const updatedData = {
+    title: formData.get("title"),
+    content: formData.get("content")
+  };
+
+  try{
+    await updatePost(id,updatedData);
+
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 3000);
+     
+    // navigate('/admin');
+    const updatedPost = await updatePost(id, updatedData);
+
+    setPosts(prevPosts =>
+      prevPosts.map(p =>
+        p._id === id ? updatedPost : p
+      )
+    );
+
+
+
+  } catch(err){
+    console.error("Failed to update: ",err);
+    alert("Error updating Post");
+  } finally{
+    setUpdating(false);
+  }
+} 
 
 
 // -- DELETE HANDLER ---
@@ -38,6 +73,10 @@ async function handleUpdate(e) {
   return (
     <section className="max-w-3xl mx-auto px-4 py-12">
 
+      {success && (
+        <p className="text-green-600 text-sm">Post updated successfully ✓</p>
+      )}
+
       <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
 
         <div className="flex justify-between items-start mb-8">
@@ -54,7 +93,7 @@ async function handleUpdate(e) {
             </label>
 
             <input
-              type="text"
+              type="text" name="title"
               defaultValue={post?.title}
               className="w-full text-xl font-bold border-b border-gray-100 py-2 outline-none"
             />
@@ -66,7 +105,7 @@ async function handleUpdate(e) {
             </label>
 
             <textarea
-              rows="3"
+              rows="3" name="content"
               defaultValue={post?.content}
               className="w-full border border-gray-100 p-3 rounded-md outline-none resize-none"
             />
@@ -83,10 +122,10 @@ async function handleUpdate(e) {
             </button>
 
             <button
-              type="submit"
+              type="submit" disabled={updating}
               className="px-6 py-2 bg-black text-white text-sm font-bold rounded-md"
             >
-              Update Post
+              {updating ? "Updating..." : "Update Post"}
             </button>
 
           </div>
