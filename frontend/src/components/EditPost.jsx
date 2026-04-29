@@ -23,6 +23,7 @@ export default function EditPost() {
     const updatedData = {
       title: formData.get("title"),
       content: formData.get("content"),
+      category: formData.get("category"),
     };
 
     try {
@@ -96,6 +97,19 @@ export default function EditPost() {
               className="w-full text-xl font-bold border-b border-gray-100 py-2 outline-none"
             />
           </div>
+          {/**  CATEGORY */}
+
+           <div>
+        <label for="category" className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-2">Category</label>
+        <select id="category" name="category" defaultValue={post?.category}
+          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-md focus:ring-1 focus:ring-black focus:border-black outline-none appearance-none transition-all text-gray-700">
+          <option value="">Select</option>
+          <option value="Politics">Politics</option>
+          <option value="Technology">Technology</option>
+          <option value="Logistics">Logistics</option>
+          <option value="Environment">Environment</option>
+        </select>
+      </div>
 
           {/* CONTENT */}
           <div>
