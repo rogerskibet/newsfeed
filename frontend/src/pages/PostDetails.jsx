@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import BlogDate from "../components/BlogDate";
 
 function PostDetails() {
 
@@ -43,7 +44,7 @@ function PostDetails() {
     <div class="flex items-center gap-4 text-xs font-semibold text-gray-500 uppercase tracking-[0.2em] mb-6">
       <span>{post.category ? post.category: 'General'}</span>
       <span class="w-1 h-1 rounded-full bg-gray-300"></span>
-      <time datetime="2026-04-27">{post.updatedAt}</time>
+      <time datetime="2026-04-27"><BlogDate date={post.createdAt} /></time>
     </div>
     <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">
       {post.title}
@@ -59,12 +60,12 @@ function PostDetails() {
   </header>
 
   <figure class="mb-12">
-    <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-        <div class="w-full h-full flex items-center justify-center text-gray-300">
-            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-        </div>
+   <div className="overflow-hidden bg-gray-100">
+      <img
+        src={post.image}
+        alt={post.title}
+        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+      />
     </div>
     <figcaption class="mt-4 text-center text-sm text-gray-500 italic">Image Caption.</figcaption>
   </figure>
