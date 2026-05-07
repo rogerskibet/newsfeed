@@ -58,7 +58,7 @@ export default function Admin(){
               <p className="text-xs text-gray-500 mt-0.5"> Updated at {post.updatedAt}</p>
             </td>
             <td className="px-6 py-4">
-              <span className="text-xs font-medium text-gray-600 bg-gray-100 px-2.5 py-1 rounded">Infrastructure</span>
+              <span className="text-xs font-medium text-gray-600 bg-gray-100 px-2.5 py-1 rounded">{post.category ? post.category : "General"}</span>
             </td>
             <td className="px-6 py-4">
               <div className="flex items-center gap-1.5 text-xs font-bold text-green-600 uppercase tracking-tight">

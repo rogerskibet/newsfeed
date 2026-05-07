@@ -15,7 +15,7 @@ export default function PostCard({post}){
   <div className="p-5 lg:p-6">
     
     <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
-        <span className="px-2.5 py-0.5 rounded-full font-medium bg-gray-100 text-gray-800 tracking-wider uppercase">Politics</span>
+        <span className="px-2.5 py-0.5 rounded-full font-medium bg-gray-100 text-gray-800 tracking-wider uppercase">{post.category ? post.category : 'General'}</span>
         <time datetime="2024-03-22">{post.createdAt}</time>
     </div>
 
